@@ -11,18 +11,17 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                // Use 'bat' for Windows Command Prompt
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests & Coverage') {
             steps {
-                // Runs tests and generates an XML coverage report for SonarQube
-                sh 'pytest --cov=app --cov-report=xml tests/'
+                // Generates coverage.xml for SonarQube
+                bat 'pytest --cov=app --cov-report=xml tests/'
             }
         }
-
-      
     }
 
     post {
