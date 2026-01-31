@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.11'   // Python + pip available
-            args '-u root'        // optional: run as root
+            image 'python:3.11'   // Python image with pip
+            args '-u root'
         }
     }
 
