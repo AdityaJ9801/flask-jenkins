@@ -16,12 +16,13 @@ pipeline {
             }
         }
 
-        stage('Run Tests & Coverage') {
-            steps {
-                // Generates coverage.xml for SonarQube
-                bat 'pytest --cov=app --cov-report=xml tests/'
-            }
+      stage('Run Tests & Coverage') {
+        steps {
+            // Using 'python -m' solves most ModuleNotFound issues
+            bat 'python -m pytest --cov=app --cov-report=xml tests/'
         }
+    }
+
     }
 
     post {
