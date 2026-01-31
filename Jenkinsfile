@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11'   // Use official Python Docker image
+            args '-u root'        // Run as root if you need to install packages
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -11,18 +16,17 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // Use 'bat' for Windows Command Prompt
-                bat 'pip install -r requirements.txt'
+                // Use 'sh' for Linux shell inside Docker
+                sh 'pip install -r requirements.txt'
             }
         }
 
-      stage('Run Tests & Coverage') {
-        steps {
-            // Using 'python -m' solves most ModuleNotFound issues
-            bat 'python -m pytest --cov=app --cov-report=xml tests/'
+        stage('Run Tests & Coverage') {
+            steps {
+                // Using 'python -m' solves most ModuleNotFound issues
+                sh 'python -m pytest --cov=app --cov-report=xml tests/'
+            }
         }
-    }
-
     }
 
     post {
