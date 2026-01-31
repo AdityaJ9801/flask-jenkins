@@ -12,7 +12,6 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.11'
-                    args '-u root'
                 }
             }
             stages {
@@ -40,10 +39,6 @@ pipeline {
             }
         }
 
-        stage('Archive Reports') {
-            steps {
-                archiveArtifacts artifacts: 'coverage.xml,htmlcov/**', allowEmptyArchive: true
-            }
         }
     }
 
